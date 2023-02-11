@@ -12,7 +12,7 @@ app.get("/", (c) => {
   return c.json({ message: "Hello World!" });
 });
 
-app.post("/telemetry", async (c) => {
+app.post("/shared_dict/collect", async (c) => {
   const body = c.req.body;
   if (!body) {
     c.status(400);
@@ -49,6 +49,12 @@ app.post("/telemetry", async (c) => {
   console.log(`[telemetry] ${data.event}`);
 
   return new Response(null, { status: 204 });
+});
+
+app.get("/shared_dict", async (c) => {
+  // FIXME: 本来は、ちゃんとした審査とかの機構を作るべきだが、仮なので全部通す
+  const dict = JSON.parse(await Deno.readTextFile(dictFile));
+  return c.json(dict);
 });
 
 serve(app.fetch, { port: 50023 });
