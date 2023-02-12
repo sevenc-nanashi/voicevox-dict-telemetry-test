@@ -2,14 +2,9 @@ import { hono, ky, serve } from "./deps.ts";
 import { DictWord, dictWordSchema, requestSchema } from "./schema.ts";
 
 const app = new hono.Hono();
-const dictFile = "./dict.json";
 
 const gasUrl =
   "https://script.google.com/macros/s/AKfycbz5ElVEy0xe3Wi-FdGzSxbuS0yvGCeRJlmyAdCMYuzYPoKHmGpU91-xM46AECwhBTOc/exec";
-
-if (await Deno.readTextFile(dictFile).catch(() => null) === null) {
-  await Deno.writeTextFile(dictFile, "{}");
-}
 
 const wordToRow = (word: DictWord) => {
   return [
