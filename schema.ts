@@ -11,26 +11,18 @@ export const dictWordSchema = z.object({
     "VERB",
     "ADJECTIVE",
     "SUFFIX",
+    "",
   ]).or(z.null()),
   priority: z.number(),
-}).transform((v) => {
-  return {
-    ...v,
-    wordUuid: v.word_uuid,
-    wordType: v.word_type,
-  };
 });
+
+export type DictWord = z.infer<typeof dictWordSchema>;
 
 export const requestType = {
   apply_word: dictWordSchema,
   rewrite_word: dictWordSchema,
   delete_word: z.object({
     word_uuid: z.string(),
-  }).transform((v) => {
-    return {
-      ...v,
-      wordUuid: v.word_uuid,
-    };
   }),
 };
 
