@@ -12,7 +12,7 @@ export const dictWordSchema = z.object({
     "ADJECTIVE",
     "SUFFIX",
     "",
-  ]).or(z.null()),
+  ]).or(z.null()).transform((v) => (v === "" ? null : v)),
   priority: z.number(),
 });
 
